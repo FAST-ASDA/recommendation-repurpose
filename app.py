@@ -2,12 +2,12 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask, render_template, request
-# from flask.ext.sqlalchemy import SQLAlchemy
-import logging
-from logging import Formatter, FileHandler
-from forms import *
+from flask import Flask, request
 import os
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pickle
+import math
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -15,27 +15,39 @@ import os
 
 app = Flask(__name__)
 app.config.from_object('config')
-#db = SQLAlchemy(app)
 
-# Automatically tear down SQLAlchemy.
-'''
-@app.teardown_request
-def shutdown_session(exception=None):
-    db_session.remove()
-'''
+df=0
+vectorizer=0
+model=0
+def preprocess():
+    global df
+    df=pd.read_csv('assets/repurpose_data_id.csv')
+    global vectorizer
+    vectorizer=TfidfVectorizer(stop_words='english')
+    inp=vectorizer.fit_transform(df['title'].values.astype('U'))
+    fp= open('assets/recommender_model_kmeans.pkl', 'rb')
+    global model 
+    model= pickle.load(fp)
+    return
+def parseLink(imageList):
+    imageList=str(imageList)
+    first=-1
+    sec =-1
+    cur=""
+    for i in range(len(imageList)):
+        if(imageList[i]=="'"):
+            if(first==-1):
+                first=i
+            else:
+                sec=i
+                if(sec-first-1<=1):
+                    first=-1
+                    sec=-1
+                else :
+                    return imageList[first+1:sec]
+    return cur
+            
 
-# Login required decorator.
-'''
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
-'''
 #----------------------------------------------------------------------------#
 # Controllers.
 #----------------------------------------------------------------------------#
@@ -43,53 +55,68 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
+    msg="This is a flask app"
+    return msg
 
 
-@app.route('/about')
-def about():
-    return render_template('pages/placeholder.about.html')
+@app.route('/getrecommendation',methods=['GET'])
+def getrecommendationt():
+    title = request.args.get('title', default = '*', type = str)
+    print(title)
+    # title='sexy'
+    y=vectorizer.transform([title])
+    clusterId=model.predict(y)
+    df_cluster=df[model.labels_ == clusterId]
+    sample=df_cluster.head(10)
+    result=[]
+    for i in range(len(sample)):
+        item=sample.iloc[i]
+        # print(item,type(item))
+        if(item['notThrift']==0):
+            continue
+        if(len(result)>=5):
+            break
+        obj={
+            'title':str(item['title']),
+            'brand':str(item['brand']),
+            'productId':int(item['productId']),
+        }
+        if(type(item['price'])==str or math.isnan(float(item['price']))==False):
+            obj['price']=str(item['price'])
+        # print(type(item['imageURLHighRes']))
+        if(type(item['imageURLHighRes'])==str):
+            print(item['imageURLHighRes'])
+            link=parseLink(item['imageURLHighRes'])
+            obj['imageURL']=link
+        result.append(obj)
+    sample=df_cluster.sample(20)
+    for i in range(len(sample)):
+        item=sample.iloc[i]
+        # print(item,type(item))
+        if(item['notThrift']==0):
+            continue
+        if(len(result)>=10):
+            break
+        obj={
+            'title':str(item['title']),
+            'brand':str(item['brand']),
+            'productId':int(item['productId']),
+        }
+        if(type(item['price'])==str or math.isnan(float(item['price']))==False):
+            obj['price']=str(item['price'])
+        print(type(item['imageURLHighRes']))
+        if(type(item['imageURLHighRes'])==str):
+            print(item['imageURLHighRes'])
+            link=parseLink(item['imageURLHighRes'])
+            obj['imageURL']=link
+        result.append(obj)
+    print(result)
+        
+    result={
+        'data':result
+    }
+    return result
 
-
-@app.route('/login')
-def login():
-    form = LoginForm(request.form)
-    return render_template('forms/login.html', form=form)
-
-
-@app.route('/register')
-def register():
-    form = RegisterForm(request.form)
-    return render_template('forms/register.html', form=form)
-
-
-@app.route('/forgot')
-def forgot():
-    form = ForgotForm(request.form)
-    return render_template('forms/forgot.html', form=form)
-
-# Error handlers.
-
-
-@app.errorhandler(500)
-def internal_error(error):
-    #db_session.rollback()
-    return render_template('errors/500.html'), 500
-
-
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('errors/404.html'), 404
-
-if not app.debug:
-    file_handler = FileHandler('error.log')
-    file_handler.setFormatter(
-        Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
-    )
-    app.logger.setLevel(logging.INFO)
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
-    app.logger.info('errors')
 
 #----------------------------------------------------------------------------#
 # Launch.
@@ -97,6 +124,7 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
+    preprocess()
     app.run()
 
 # Or specify port manually:
