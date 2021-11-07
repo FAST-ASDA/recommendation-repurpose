@@ -3,7 +3,6 @@
 #----------------------------------------------------------------------------#
 
 from flask import Flask, request
-import os
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
@@ -21,7 +20,7 @@ vectorizer=0
 model=0
 def preprocess():
     global df
-    df=pd.read_csv('assets/repurpose_data_id.csv')
+    df=pd.read_csv('assets/finalData.csv')
     global vectorizer
     vectorizer=TfidfVectorizer(stop_words='english')
     inp=vectorizer.fit_transform(df['title'].values.astype('U'))
@@ -63,14 +62,12 @@ def home():
 def getrecommendationt():
     title = request.args.get('title', default = '*', type = str)
     print(title)
-    # title='sexy'
-    global vectorizer
-    global model
     y=vectorizer.transform([title])
     clusterId=model.predict(y)
     df_cluster=df[model.labels_ == clusterId]
-    sample=df_cluster.head(10)
+    print("Cluster id:: ", clusterId)
     result=[]
+    sample=df_cluster.head(10)
     for i in range(len(sample)):
         item=sample.iloc[i]
         # print(item,type(item))
@@ -87,8 +84,9 @@ def getrecommendationt():
             obj['price']=str(item['price'])
         # print(type(item['imageURLHighRes']))
         if(type(item['imageURLHighRes'])==str):
-            print(item['imageURLHighRes'])
-            link=parseLink(item['imageURLHighRes'])
+            # print(item['imageURLHighRes'])
+            # link=parseLink(item['imageURLHighRes'])
+            link=item['imageURLHighRes']
             obj['imageURL']=link
         result.append(obj)
     sample=df_cluster.sample(20)
@@ -97,7 +95,7 @@ def getrecommendationt():
         # print(item,type(item))
         if(item['notThrift']==0):
             continue
-        if(len(result)>=10):
+        if(len(result)>=15):
             break
         obj={
             'title':str(item['title']),
@@ -106,13 +104,14 @@ def getrecommendationt():
         }
         if(type(item['price'])==str or math.isnan(float(item['price']))==False):
             obj['price']=str(item['price'])
-        print(type(item['imageURLHighRes']))
+        # print(type(item['imageURLHighRes']))
         if(type(item['imageURLHighRes'])==str):
-            print(item['imageURLHighRes'])
-            link=parseLink(item['imageURLHighRes'])
+            # print(item['imageURLHighRes'])
+            # link=parseLink(item['imageURLHighRes'])
+            link=item['imageURLHighRes']
             obj['imageURL']=link
         result.append(obj)
-    print(result)
+    # print(result)
         
     result={
         'data':result
@@ -126,6 +125,7 @@ def getrecommendationt():
 
 # Default port:
 preprocess()
+
 if __name__ == '__main__':
     app.run()
 
