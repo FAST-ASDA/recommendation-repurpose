@@ -1,283 +1,247 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-## Welcome
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-Hello. Want to get started with Flask quickly? Good. You came to the right place. This Flask application framework is pre-configured with **Flask-SQLAlchemy**, **Flask-WTF**, **Fabric**, **Coverage**, and the **Bootstrap** frontend (among others). This will get your Flask app up and running on Heroku or PythonAnywhere quickly. Use this starter, boilerplate for all you new Flask projects. Cheers!
+<!-- PROJECT LOGO -->
+<br />
 
-<hr>
+<p align="center">
 
-![real-python-logo](https://raw.githubusercontent.com/realpython/about/master/rp_small.png)
 
-**Designed for the [Real Python](http://www.realpython.com) course.**
+  <h3 align="center">Myntra Repurpose</h3>
 
-<hr>
+  <p align="center">
+    An awesome website to make online thrifting market organized and mainstream. Made with Love.
+    <br />
+    <a href="https://github.com/FAST-ASDA/repurpose-server"><strong>Explore the docs »</strong></a>
+    <br />
+    ·
+    <a href="https://github.com/FAST-ASDA/repurpose-server/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/FAST-ASDA/repurpose-server/issues">Request Feature</a>
+  </p>
+</p>
 
-Preview the skeleton app here - [http://www.flaskboilerplate.com/](http://www.flaskboilerplate.com/)
+  
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#challenges">Challenges</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#issues">Issues</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
 
-**EXAMPLE APP: [http://flasktaskr.herokuapp.com/](http://flasktaskr.herokuapp.com/)**
+<!-- ABOUT THE PROJECT -->
 
-**What is Flask?** Flask is a microframework for Python based on Werkzeug and Jinja2.
+## About The Project
 
-Project Structure
---------
+Editing a real-world photo through computer software or mobile applications is one of the easiest things one can do today before sharing the doctored image on one’s social networking sites. Although most people do it for fun, it is suspectable if one concealed an object or changed someone’s face within the image. Before questioning the intention behind the editing operations, we need to first identify how and which part of the image has been manipulated. It therefore demands automatic tools for identifying the intrinsic difference between authentic images and tampered images. [A great survey on this topic](https://www.sciencedirect.com/science/article/abs/pii/S104732031830350X)
 
-  ```sh
-  ├── Procfile
-  ├── Procfile.dev
-  ├── README.md
-  ├── app.py
-  ├── config.py
-  ├── error.log
-  ├── forms.py
-  ├── models.py
-  ├── requirements.txt
-  ├── static
-  │   ├── css
-  │   │   ├── bootstrap-3.0.0.min.css
-  │   │   ├── bootstrap-theme-3.0.0.css
-  │   │   ├── bootstrap-theme-3.0.0.min.css
-  │   │   ├── font-awesome-3.2.1.min.css
-  │   │   ├── layout.forms.css
-  │   │   ├── layout.main.css
-  │   │   ├── main.css
-  │   │   ├── main.quickfix.css
-  │   │   └── main.responsive.css
-  │   ├── font
-  │   │   ├── FontAwesome.otf
-  │   │   ├── fontawesome-webfont.eot
-  │   │   ├── fontawesome-webfont.svg
-  │   │   ├── fontawesome-webfont.ttf
-  │   │   └── fontawesome-webfont.woff
-  │   ├── ico
-  │   │   ├── apple-touch-icon-114-precomposed.png
-  │   │   ├── apple-touch-icon-144-precomposed.png
-  │   │   ├── apple-touch-icon-57-precomposed.png
-  │   │   ├── apple-touch-icon-72-precomposed.png
-  │   │   └── favicon.png
-  │   ├── img
-  │   └── js
-  │       ├── libs
-  │       │   ├── bootstrap-3.0.0.min.js
-  │       │   ├── jquery-1.10.2.min.js
-  │       │   ├── modernizr-2.6.2.min.js
-  │       │   └── respond-1.3.0.min.js
-  │       ├── plugins.js
-  │       └── script.js
-  └── templates
-      ├── errors
-      │   ├── 404.html
-      │   └── 500.html
-      ├── forms
-      │   ├── forgot.html
-      │   ├── login.html
-      │   └── register.html
-      ├── layouts
-      │   ├── form.html
-      │   └── main.html
-      └── pages
-          ├── placeholder.about.html
-          └── placeholder.home.html
+To address the issue we try to solve the problem in 2 phases :
+
+1. Detecting whether image has been tampered with or not.
+2. Finding the exact tampered region of an image through various deep learning techniques.
+3. Making a real-world usable product out of the model we generated that can be used by anyone.
+4. This product has scope of being extended to a fully functional product which can be used by security agencies.
+
+A list of commonly used resources that I find helpful are listed in the acknowledgements.
+
+### Built With
+
+- [Python](https://www.python.org)
+- [JQuery](https://jquery.com)
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+- [Tensorflow](https://www.tensorflow.org/)
+- [Keras](https://www.keras.io)
+- [NumPy](https://www.numpy.org/)
+- [Matplotlib](https://www.matplotlib.org/)
+- [Segmentation Models](https://segmentation-models.readthedocs.io/en/latest/#)
+- [Kaggle GPU]
+- [Scikit-image](https://scikit-image.org/)
+- [Pillow](https://pypi.org/project/Pillow/)
+- [OS](https://docs.python.org/3/library/os.html)
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+### Prerequisites
+
+- [Python 3.7+](https://www.python.org/downloads/)
+- Make a bucket on Amazon AWS S3 and download the keys. Make sure your bucket is public.
+- Create an .env file with the following keys. (Please contact anyone from below contacts for S3 keys if there is a difficulty in using S3 or if you want to test with S3 without making an AWS account) 
+
   ```
+  export S3_BUCKET=<Bucket Name>
+  export S3_SECRET_ACCESS_KEY=<AWSSecretKey>
+  export S3_KEY=<AWSAccessKeyId>
+  export S3_REGION=<AWS Region>
 
-### Screenshots
+  ```
+  
+ - Make folder structure of the folder 'models' in the following way after downloading the models from and [here](https://drive.google.com/drive/folders/146X2Z_ubUO8W_0JLEx8Jrvw8937MUr2q?usp=sharing) and arrange them respectively
+ 
+```
+models
+|--- segmentation
+|    ├── model.json
+|    └── model_for_json.h5
+|     
+|--- model.json
+|--- model_weights.h5
+```
 
-![Pages](https://github.com/realpython/flask-boilerplate/blob/master/screenshots/pages.png)
-
-![Forms](https://github.com/realpython/flask-boilerplate/blob/master/screenshots/forms.png)
-
-
-### Quick Start
+### Installation
 
 1. Clone the repo
-  ```
-  $ git clone https://github.com/realpython/flask-boilerplate.git
-  $ cd flask-boilerplate
-  ```
+   ```
+   $ git clone https://github.com/killer4639/sach-ka-saamna.git
+   $ cd sach-ka-saamna
+   ```
+2. Activating virtual environment (optional)
+   ```
+   $ python -m venv venv
+   $ venv\Scripts\activate
+   ```
+3. Install requirements
+   ```
+   $ pip install -r requirements.txt
+   ```
+4. Run Application
 
-2. Initialize and activate a virtualenv:
-  ```
-  $ virtualenv --no-site-packages env
-  $ source env/bin/activate
-  ```
+   ```
+   $ python app.py
+   ```
 
-3. Install the dependencies:
-  ```
-  $ pip install -r requirements.txt
-  ```
+5. Issues while running
 
-5. Run the development server:
-  ```
-  $ python app.py
-  ```
+   ```
+    If you encounter an issue on your terminal like this
+    KeyError: 'DATABASE_URL'
+    It is because you don't have any  postresql online hosted database. Use the local one as given. Or uncomment it from scripts/tabledef.py
 
-6. Navigate to [http://localhost:5000](http://localhost:5000)
+    Images get stored in the assets folder
+    
+    Slack bot will not run so that won't run. Contact us
+   ```
+
+<!-- USAGE EXAMPLES -->
+
+## Usage
 
 
-Deploying to Heroku
-------
+We have developed a slackbot and will create a telegram bot for using it so that you can detect tampering with the easy of your phone without visiting any website. We eventually want to extend it to WhatsApp (the biggest platform) hence increase our ease of usability
 
-1. Signup for [Heroku](https://api.heroku.com/signup)
-2. Login to Heroku and download the [Heroku Toolbelt](https://toolbelt.heroku.com/)
-3. Once installed, open your command-line and run the following command - `heroku login`. Then follow the prompts:
 
-  ```
-  Enter your Heroku credentials.
-  Email: michael@mherman.org
-  Password (typing will be hidden):
-  Could not find an existing public key.
-  Would you like to generate one? [Yn]
-  Generating new SSH public key.
-  Uploading ssh public key /Users/michaelherman/.ssh/id_rsa.pub
-  ```
+<!-- ROADMAP -->
 
-4. Activate your virtualenv
-5. Heroku recognizes the dependencies needed through a *requirements.txt* file. Create one using the following command: `pip freeze > requirements.txt`. Now, this will only create the dependencies from the libraries you installed using pip. If you used easy_install, you will need to add them directly to the file.
-6. Create a Procfile. Open up a text editor and save the following text in it:
+## Roadmap
 
-  ```
-  web: gunicorn app:app --log-file=-
-  ```
+- Data preprocessing.
+- Perform error level analysis of pristine and tampered images.
+- Building the segmentation and classification model. We have used keras with tensorflow as backend to train and build the model.
+- Hyper parameter tuning (learning rate,callback parameters,custom loss function etc).
+- Creating the web app for actual usability of our idea and not just a script to watch
+- Finally creating a slackbot for ease of usability.
 
-   Then save the file in your applications root or main directory as *Procfile* (no extension). The word "web" indicates to Heroku that the application will be attached to the HTTP routing stack once deployed.
 
-7. Create a local Git repository (if necessary):
+<!-- Challenges -->
 
-  ```
-  $ git init
-  $ git add .
-  $ git commit -m "initial files"
-  ```
+## Challenges
 
-8. Create your app on Heroku:
+The learning curve of our project was very steep. Limited computing resources was the biggest challenge we ran into. The image segmentation task is very expensive and thus we require a lot of computing resources to train the model effectively for a longer duration and bigger dataset. Because of that, we were only able to train the model on 3000 images for both the classification and image segmentation part. We had to devise a custom loss function for image segmentation to get good results. We were facing overfitting issues in the binary classification task and thus had to perform a lot of experimentation and fine-tuning to get good results. Deploying deep learning models is not easy because of the huge slug size of libraries like TensorFlow and Keras. Thus we were not able to deploy the model on Heroku. We were comparatively new to the Flask framework and thus debugging took more time than expected. We also developed a slack bot on the go after the suggestion of one of the mentors.
 
-  ```
-  $ heroku create <name_it_if_you_want>
-  ```
 
-9. Deploy your code to Heroku:
+<!-- CONTRIBUTING -->
 
-  ```
-  $ git push heroku master
-  ```
+## Contributing
 
-10. View the app in your browser:
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+<a href="https://github.com/killer4639/sach-ka-saamna/blob/master/CONTRIBUTING.md">Read our contributing guidelines</a>
 
-  ```
-  $ heroku open
-  ```
+<!-- ISSUES -->
 
-11. You app should look similar to this - [http://www.flaskboilerplate.com/](http://www.flaskboilerplate.com/)
+## Issues
 
-12. Having problems? Look at the Heroku error log:
+- After resetting the password if we logout, then it doesn't login with the new credentials. This needs to be looked upon.
+- The compute timing on local machine is slow and hence we can use any cloud service for our model computations which will return a JSON object with image and result. This will also help us to deploy on Heroku with less slug size.
+- Better error handling and unit testing. Eg. error is encountered if without uploading any image, we click predict.
+- Email verification
+- Making it mobile responsive and UI additions.
 
-  ```
-  $ heroku logs
-  ```
+<!-- LICENSE -->
 
-### Deploying to PythonAnywhere
+## License
 
-1. Install [Git](http://git-scm.com/downloads) and [Python](http://install.python-guide.org/) - if you don't already have them, of course.
+Distributed under the MIT License. See `LICENSE` for more information.
 
-  > If you plan on working exclusively within PythonAnywhere, which you can, because it provides a cloud solution for hosting and developing your application, you can skip step one entirely. :)
+<!-- CONTACT -->
 
-2. Sign up for [PythonAnywhere](https://www.pythonanywhere.com/pricing/), if you haven't already
-3. Once logged in, you should be on the Consoles tab.
-4. Clone this repo:
-  ```
-  $ git clone git://github.com/realpython/flask-boilerplate.git
-  $ cd flask-boilerplate
-  ```
+## Contact
 
-5. Create and activate a virtualenv:
-  ```
-  $ virtualenv venv --no-site-packages
-  $ source venv/bin/activate
-  ```
+- [Anikash Chakraborty](https://www.linkedin.com/in/anikash-chakraborty/) (mailto: akh.chakraborty11@gmail.com)
+- [Shiva Gupta](https://www.linkedin.com/in/shiva-gupta-1843b6170/) (mailto: shivagupta4639@gmail.com)
+- [Divyansh Goel](https://www.linkedin.com/in/divyansh-goel-a0a433166/) (mailto: divyanshgoel1999@gmail.com) (Team Leader)
+- Project Link: [https://github.com/killer4639/sach-ka-saamna](https://github.com/killer4639/sach-ka-saamna)
 
-6. Install requirements:
-  ```
-  $ pip install -r requirements.txt
-  ```
+<!-- ACKNOWLEDGEMENTS -->
 
-7. Next, back on PythonAnywhere, click Web tab.
-8. Click the "Add a new web app" link on the left; by default this will create an app at your-username.pythonanywhere.com, though if you've signed up for a paid "Web Developer" account you can also specify your own domain name here. Once you've decided on the location of the app, click the "Next" button.
-9. On the next page, click the "Flask" option, and on the next page just keep the default settings and click "Next" again.
-Once the web app has been created (it'll take 20 seconds or so), you'll see a link near the top of the page, under the "Reload web app" button, saying "It is configured via a WSGI file stored at..." and a filename.  Click this, and you get to a page with a text editor.
-10. Put the following lines of code at the start of the WSGI file (changing "your-username" appropriately)
+## Acknowledgements
 
-  ```
-  activate_this = '/home/your-username/flask-boilerplate/venv/bin/activate_this.py'
-  execfile(activate_this, dict(__file__=activate_this))
-  ```
+- [Img Shields](https://shields.io)
+- [CASIA 2.0 Dataset](https://github.com/namtpham/casia2groundtruth)
+- [MIT License](https://spdx.org/licenses/MIT.html)
+- [Anfederico](https://github.com/anfederico/flaskex)
+- [Font Awesome](https://fontawesome.com)
+- [OBS Studio](https://obsproject.com)
+- [Kaggle](https://www.kaggle.com/)
 
-11. Then update the following lines of code:
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-  from
-
-  ```
-  project_home = u'/home/your-username/mysite'
-  ```
-
-  to
-
-  ```
-  project_home = u'/home/your-username/flask-boilerplate'
-  ```
-
-  from
-
-  ```
-  from flask_app import app as application
-  ```
-
-  to
-
-  ```
-  from app import app as application
-  ```
-
-12. Save the file.
-13. Go to the website http://your-username.pythonanywhere.com/ (or your own domain if you specified a different one earlier), and you should see something like this - [http://www.flaskboilerplate.com/](http://www.flaskboilerplate.com/).
-
-*Now you're ready to start developing!*
-
-***Need to PUSH your PythonAnywhere repo to Github?***
-
-1. Start a bash console
-2. Run:
-
-  ```
-  $ ssh-keygen -t rsa
-  ```
-
-3. Just accept the defaults, then show the public key:
-
-  ```
-  $ cat ~/.ssh/id_rsa.pub
-  ```
-
-4. Log in to GitHub.
-5. Go to the "Account settings" option at the top right (currently a wrench and a screwdriver crossed)
-6. Select "SSH Keys" from the list at the left.
-7. Click the "Add SSH key" button at top right.
-8. Enter a title (I suggest something like "From PythonAnywhere" and then paste the output of the previous "cat" command into the Key box.
-9. Click the green "Add key" button.  You'll be prompted to enter your password.
-
-PUSH and PULL away!
-
-### What's next?
-
-1. Using Heroku? Make sure you deactivate your virtualenv once you're done deploying: `deactivate`
-2. Need to reactivate? (1) Unix - `source venv/bin/activate` (2) Windows - `venv\scripts\activate`
-4. Add your Google Analytics ID to the *main.html* file
-5. Add a domain name to [Heroku](https://devcenter.heroku.com/articles/custom-domains) or PythonAnywhere via a [CNAME](http://en.wikipedia.org/wiki/CNAME_record) record
-5. DEVELOP YOUR APP - need [help](http://realpython.com)?
-
-### Learn More
-
-1. [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/python)
-2. [PythonAnywhere - Help](https://www.pythonanywhere.com/help/)
-1. [Flask Documentation](http://flask.pocoo.org/docs/)
-2. [Flask Extensions](http://flask.pocoo.org/extensions/)
-1. [Real Python](http://www.realpythonfortheweb.com) :)
+[contributors-shield]: https://img.shields.io/github/contributors/killer4639/sach-ka-saamna.svg?style=for-the-badge
+[contributors-url]: https://github.com/killer4639/sach-ka-saamna/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/killer4639/sach-ka-saamna.svg?style=for-the-badge
+[forks-url]: https://github.com/killer4639/sach-ka-saamna/network/members
+[stars-shield]: https://img.shields.io/github/stars/killer4639/sach-ka-saamna.svg?style=for-the-badge
+[stars-url]: https://github.com/killer4639/sach-ka-saamna/stargazers
+[issues-shield]: https://img.shields.io/github/issues/killer4639/sach-ka-saamna.svg?style=for-the-badge
+[issues-url]: https://github.com/killer4639/sach-ka-saamna/issues
+[license-shield]: https://img.shields.io/github/license/killer4639/sach-ka-saamna.svg?style=for-the-badge
+[license-url]: https://github.com/killer4639/sach-ka-saamna/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/shiva-gupta-1843b6170/
 
