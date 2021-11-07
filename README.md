@@ -123,7 +123,7 @@ To get recommendations, you can send your product desciption/title as a query pa
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-<a href="https://github.com/killer4639/sach-ka-saamna/blob/master/CONTRIBUTING.md">Read our contributing guidelines</a>
+<a href="https://github.com/FAST-ASDA/recommendation-repurpose//blob/master/CONTRIBUTING.md">Read our contributing guidelines</a>
 
 
 <!-- LICENSE -->
