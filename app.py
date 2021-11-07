@@ -67,29 +67,29 @@ def getrecommendationt():
     df_cluster=df[model.labels_ == clusterId]
     print("Cluster id:: ", clusterId)
     result=[]
-    sample=df_cluster.head(10)
-    for i in range(len(sample)):
-        item=sample.iloc[i]
-        # print(item,type(item))
-        if(item['notThrift']==0):
-            continue
-        if(len(result)>=5):
-            break
-        obj={
-            'title':str(item['title']),
-            'brand':str(item['brand']),
-            'productId':int(item['productId']),
-        }
-        if(type(item['price'])==str or math.isnan(float(item['price']))==False):
-            obj['price']=str(item['price'])
-        # print(type(item['imageURLHighRes']))
-        if(type(item['imageURLHighRes'])==str):
-            # print(item['imageURLHighRes'])
-            # link=parseLink(item['imageURLHighRes'])
-            link=item['imageURLHighRes']
-            obj['imageURL']=link
-        result.append(obj)
-    sample=df_cluster.sample(20)
+    # sample=df_cluster.head(10)
+    # for i in range(len(sample)):
+    #     item=sample.iloc[i]
+    #     # print(item,type(item))
+    #     if(item['notThrift']==0):
+    #         continue
+    #     if(len(result)>=5):
+    #         break
+    #     obj={
+    #         'title':str(item['title']),
+    #         'brand':str(item['brand']),
+    #         'productId':int(item['productId']),
+    #     }
+    #     if(type(item['price'])==str or math.isnan(float(item['price']))==False):
+    #         obj['price']=str(item['price'])
+    #     # print(type(item['imageURLHighRes']))
+    #     if(type(item['imageURLHighRes'])==str):
+    #         # print(item['imageURLHighRes'])
+    #         # link=parseLink(item['imageURLHighRes'])
+    #         link=item['imageURLHighRes']
+    #         obj['imageURL']=link
+    #     result.append(obj)
+    sample=df_cluster.sample(25)
     for i in range(len(sample)):
         item=sample.iloc[i]
         # print(item,type(item))
