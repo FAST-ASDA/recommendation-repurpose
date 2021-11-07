@@ -64,6 +64,8 @@ def getrecommendationt():
     title = request.args.get('title', default = '*', type = str)
     print(title)
     # title='sexy'
+    global vectorizer
+    global model
     y=vectorizer.transform([title])
     clusterId=model.predict(y)
     df_cluster=df[model.labels_ == clusterId]
